@@ -1,4 +1,5 @@
 # include <bits/stdc++.h>
+# include "TimeMacro.h"
 using namespace std;
 typedef long long int ll;
 
@@ -26,7 +27,9 @@ ll sumEvenFibonacciTill(ll maxVal){
 }
 
 int main(){
-    std::cout<<sumEvenFibonacciTill(4*1000*1000);
+    Time(    
+        std::cout<<sumEvenFibonacciTill(4*1000*1000)<<endl;
+    );
     return 0;
 }
 

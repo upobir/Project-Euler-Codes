@@ -1,4 +1,5 @@
 # include <bits/stdc++.h>
+# include "TimeMacro.h"
 using namespace std;
 typedef long long int ll;
 
@@ -22,8 +23,9 @@ ll sumMultiplesBelow(ll maxNum, ll num1, ll num2){
 }
 
 int main(){
-    //std::cout<<sumArithmetic(1, 1, 10);
-    std::cout<<sumMultiplesBelow(1000, 3, 5)<<std::endl;    
+    Time(
+        std::cout<<sumMultiplesBelow(1000, 3, 5)<<std::endl;    
+    );
     return 0;
 }
 

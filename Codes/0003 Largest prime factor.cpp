@@ -1,6 +1,7 @@
 # include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
+# include "TimeMacro.h"
 
 /*
 Statement:
@@ -23,7 +24,9 @@ ll largestPrimeFactor(ll num){
 }
 
 int main(){
-    cout<<largestPrimeFactor(600851475143)<<endl;
+    Time(
+        cout<<largestPrimeFactor(600851475143)<<endl;
+    );
 }
 
 /*
