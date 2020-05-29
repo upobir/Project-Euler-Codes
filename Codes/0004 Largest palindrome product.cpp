@@ -20,6 +20,10 @@ ll reverseNum(ll num){
     return rev;
 }
 
+bool isPalindrome(ll num){
+    return num == reverseNum(num);
+}
+
 ll largestProductPalindrome(int len){
     ll st = 1;
     for(int i = 1; i<len; i++) st *= 10;
@@ -29,7 +33,7 @@ ll largestProductPalindrome(int len){
     for(ll bigNum = fn; bigNum >= st && bigNum*bigNum > bestPalindrome; bigNum--){
         for(ll smallNum = bigNum; smallNum >= st && bigNum*smallNum > bestPalindrome; smallNum--){
             ll product = smallNum * bigNum;
-            if(product == reverseNum(product))
+            if(isPalindrome(product))
                 bestPalindrome = product;
         }
     }

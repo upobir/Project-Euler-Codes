@@ -13,16 +13,26 @@ Statement:
  By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 */
 
-ll sumEvenFibonacciTill(ll maxVal){
-    ll fnow = 0, fnxt = 1, fnxt2;  
-    ll sum = 0;
+vector<ll> fibonacciTill(ll maxVal){
+    vector<ll> fibs;
+    ll fnow = 0, fnxt = 1, fnxt2;
     while(fnow <= maxVal){
-        if(fnow % 2 == 0) 
-            sum += fnow;
+        fibs.push_back(fnow);
         fnxt2 = fnow + fnxt;
         fnow = fnxt;
         fnxt = fnxt2;
     }
+    return fibs;
+}
+
+ll sumEvenFibonacciTill(ll maxVal){
+    vector<ll> fibs = fibonacciTill(maxVal);
+    ll sum = 0;
+    for(ll f : fibs){
+        if(f % 2 == 0)
+            sum += f;
+    }
+    
     return sum;
 }
 

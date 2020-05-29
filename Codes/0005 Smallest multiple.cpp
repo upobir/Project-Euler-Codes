@@ -10,11 +10,15 @@ Statement:
  What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 */
 
+ll LCM(ll x, ll y){
+    ll g = __gcd(x, y);
+    return x * (y/g);
+}
+
 ll smallestMultipleNumTill(int maxNum){
     ll lcm = 1;
     for(int num = 1; num <= maxNum; num++){
-        ll product = num * lcm;
-        lcm = product / __gcd(ll(num), lcm);
+        lcm = LCM(lcm, num);
     }
     return lcm;
 }
@@ -25,3 +29,9 @@ int main(){
     )
     return 0;
 }
+
+/*
+Notes:
+ smallest such multiple is lcm of the numbers, which can be computed by product/gcd rule.
+ Complexity: O(nlog n)
+*/

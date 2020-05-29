@@ -10,16 +10,24 @@ Statement:
  What is the largest prime factor of the number 600851475143 ?
 */
 
-ll largestPrimeFactor(ll num){
-    ll maxPrime = 0;
-    for(ll divi = 2; divi*divi<=num; divi++){
-        if(num % divi != 0) 
+vector<ll> primeFactorize(ll num){
+    vector<ll> primes;
+    for(ll p = 2; p*p <= num; p++){
+        if(num % p != 0)
             continue;
-        maxPrime = divi;
-        while(num % divi == 0) num /= divi;
+        while(num % p == 0){
+            num /= p;
+            primes.push_back(p);
+        }
     }
+    if(num != 1)
+        primes.push_back(num);
+    return primes;
+}
 
-    if(num != 1) maxPrime = num;
+ll largestPrimeFactor(ll num){
+    vector<ll> primes = primeFactorize(num);
+    ll maxPrime = primes.back();
     return maxPrime;
 }
 
