@@ -33,5 +33,5 @@ int main(){
 /*
 Notes:
  smallest such multiple is lcm of the numbers, which can be computed by product/gcd rule.
- Complexity: O(nlog n)
+ Complexity: O(n * log n)
 */
