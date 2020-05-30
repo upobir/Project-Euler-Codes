@@ -1,5 +1,5 @@
 # include <bits/stdc++.h>
-# include "TimeMacro.h"
+# include "../TimeMacro.h"
 using namespace std;
 typedef long long int ll;
 
