@@ -68,7 +68,7 @@ public:
         else nonZeroProuct *= x;
     }
 
-    void divide(ll x){
+    void cancel(ll x){
         if(x == 0) zeroCount--;
         else nonZeroProuct /= x;
     }
@@ -86,7 +86,7 @@ ll maxRangeDigitProduct(char *str, int rangeLen){
 
     for(int st = -rangeLen+1, fn = 0; str[fn] != 0; st++, fn++){
         if(st-1 >= 0){
-            windowProduct.divide(str[st-1] - '0');
+            windowProduct.cancel(str[st-1] - '0');
         }
         windowProduct.multiply(str[fn]-'0');
         if(st >= 0 && windowProduct.value() > best){
