@@ -54,11 +54,11 @@ char number[1001] = "\
 71636269561882670428252483600823257530420752963450\
 ";
 
-class zProduct{
+class ZProduct{
     int zeroCount;
     ll nonZeroProuct;
 public:
-    zProduct(){
+    ZProduct(){
         zeroCount = 0;
         nonZeroProuct = 1;
     }
@@ -80,7 +80,7 @@ public:
 };
 
 ll maxRangeDigitProduct(char *str, int rangeLen){
-    zProduct windowProduct;
+    ZProduct windowProduct;
     ll best = -1;
     int len = strlen(str);
 
@@ -106,7 +106,7 @@ int main(){
 
 /*
 Notes:
- This could easily be brute-d, but for the sake of abstraction, created a zProduct class that basically keeps track of 0's in products, so 
+ This could easily be brute-d, but for the sake of abstraction, created a ZProduct class that basically keeps track of 0's in products, so 
  that cancelation can be done easily.
  Complexity: O(|n|)
 */

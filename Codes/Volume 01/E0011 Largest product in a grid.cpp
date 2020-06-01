@@ -56,11 +56,11 @@ char input[] = "\
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48\n\
 ";
 
-class zProduct{
+class ZProduct{
     int zeroCount;
     ll nonZeroProuct;
 public:
-    zProduct(){
+    ZProduct(){
         zeroCount = 0;
         nonZeroProuct = 1;
     }
@@ -123,7 +123,7 @@ ll largestAdjacentProductInGrid(char *grid, int adjlen){
 
                 ni = i, nj = j;
                 int ti = i-adjlen*dir.first, tj = j - adjlen*dir.second;
-                zProduct prod;
+                ZProduct prod;
                 while(isValid(ni, nj)){
                     if(isValid(ti, tj))
                         prod.cancel(numGrid[ti][tj]);
@@ -150,7 +150,7 @@ int main(){
 
 /*
 Notes:
- The problem can be solved quite easily via brute, but I did it with zProduct class and sliding window for generality. for any direction,
+ The problem can be solved quite easily via brute, but I did it with ZProduct class and sliding window for generality. for any direction,
  we use only those cells to start the window, if that cell would be at edge (resp. to the dir). Also made some functions for parsing, 
  hopefully will be useful.
  Complexity: O(nm)
