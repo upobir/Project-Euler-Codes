@@ -55,6 +55,11 @@ ll firstTriNumWithMinDivisors(ll targetDiviCount){
 }
 
 int main(){
+
+    int x = 1;
+    int y = 1;
+    int z = 1;
+
     Time(
         cout<<firstTriNumWithMinDivisors(500)<<endl;
     );
