@@ -10,8 +10,8 @@ Statement:
 */
 
 class BigInteger{
-    const static int base = 1000*1000*1000;
-    const static int baseLength = 9;
+    const static int BASE = 1000*1000*1000;
+    const static int BASELENGTH = 9;
     vector<int> parts;
 
     int get(int i){
@@ -23,15 +23,15 @@ public:
 
     BigInteger(ll number){
         while(number){
-            parts.push_back(number % base);
-            number /= base;
+            parts.push_back(number % BASE);
+            number /= BASE;
         }
     }
 
     BigInteger(string number){
         for(int done = int(number.size()); done > 0; done -= 9){
-            int startPos = (done >= baseLength)? done - baseLength : 0;
-            int part = stoi(number.substr(startPos, baseLength));
+            int startPos = (done >= BASELENGTH)? done - BASELENGTH : 0;
+            int part = stoi(number.substr(startPos, BASELENGTH));
             parts.push_back(part);
         }
     }
@@ -40,7 +40,7 @@ public:
         stringstream number;
         number << (parts.empty()? 0 : parts.back());
         for(int i = int(parts.size()) - 2; i>=0; i--){
-            number<<setfill('0')<<setw(baseLength)<<parts[i];
+            number<<setfill('0')<<setw(BASELENGTH)<<parts[i];
         }
         return number.str();
     }
@@ -50,9 +50,9 @@ public:
         int carry = 0;
         for(int i = 0; i<parts.size() || i<other.parts.size() || carry != 0; i++){
             res.parts.push_back(carry + get(i) + other.get(i));
-            carry = (res.parts.back() >= base);
+            carry = (res.parts.back() >= BASE);
             if(carry != 0)
-                res.parts.back() -= base;
+                res.parts.back() -= BASE;
         }
         return res;
     }
