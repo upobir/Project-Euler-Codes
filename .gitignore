@@ -34,3 +34,6 @@
 # VSCode files
 *.code-workspace
 .vscode
+
+# Project specific ignores
+TemporaryFile.h
