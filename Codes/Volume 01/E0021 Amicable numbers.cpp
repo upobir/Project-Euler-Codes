@@ -24,7 +24,7 @@ vector<ll> sigmaSieveTill(int maxNum){
 
 ll sumOfAmicableNumbersUntil(int maxNum){
     ll sum = 0;
-    int guessBound = 1.5*maxNum;
+    int guessBound = maxNum*log(maxNum+1);
     vector<ll> sigma = sigmaSieveTill(guessBound);
     for(int num = 1; num < maxNum; num++){
         ll sumOfDiv = sigma[num];
@@ -45,7 +45,7 @@ int main(){
 /*
 Notes:
  If x and y are amicable then sigma(x) = y+x = sigma(y) [sigma is sum of all divisors], so we can use sieve to find sigma[x] for numbers
- and find the corresponding y which should be amicable paired. Now this paired other number can be higher than the maxNum, so we use a guess
- to find sigma for upto 1.5*maxNum. Since sigma(x)-x will be around O(x), so this in general works.
- Complexity: O(n * log n)
+ and find the corresponding y which should be amicable paired. Now this paired other number can be higher than the maxNum, in fact it can 
+ be up to n * ln n, so we sieve for all numbers up to that.
+ Complexity: O(n * log^2 n)
 */
