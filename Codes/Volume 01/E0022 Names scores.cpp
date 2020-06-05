@@ -28,21 +28,27 @@ int scoreString(string name){
     return sum;
 }
 
-int scoreFileNames(string filePath){
-    int score = 0;
+//reads strings which have " around them and only one line of csv
+vector<string> readNaiveStringCSV(string filePath){
     fstream file(filePath, fstream::in);
-    string nameString;
+    string fullString;
     if(file.is_open()){
         if(file.good()){
-            file>>nameString;
+            file>>fullString;
         }
         file.close();
     }
-    vector<string> names = tokenizeWithChar(nameString, ',');
-    for(string &name: names){
+    vector<string> values = tokenizeWithChar(fullString, ',');
+    for(string &name: values){
         name.erase(name.begin());
         name.erase(name.end()-1);
     }
+    return values;
+}
+
+int scoreFileNames(string filePath){
+    int score = 0;
+    vector<string> names = readNaiveStringCSV(filePath);
 
     sort(names.begin(), names.end());
     
