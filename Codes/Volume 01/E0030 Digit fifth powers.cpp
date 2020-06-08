@@ -58,5 +58,5 @@ Notes:
  We check all numbers upto a limit, for the limit we find digit count k s.t. 10^k > k*9^exponent, that is even minimal number with that 
  many digit is greater than digit sum, a rough estimate to this is 10^k/k > 9^exponent = x -> k-log10(k) = log10(x) -> k = log10(x)+
  log10(log10(x))
- Complexity: O(10^(n+log n))
+ Complexity: O(10^(n+log n) * log n)
 */
