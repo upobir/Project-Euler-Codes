@@ -27,21 +27,32 @@ ll sumFuncDigits(ll num, vector<ll> &funcMap){
     return sum;
 }
 
-ll sumOfNumberEqualPowerDigitSum(int exponent){
-    int guessBoundDigits = llround(exponent*log10(9) + log10(exponent*log10(9)))+1;
-    int guessBound = 1;
-    for(int i = 0; i<guessBoundDigits; i++) guessBound *= 10;
+vector<ll> listNumEqualDigitFuncSum(vector<ll> &funcMap){
+    ll guessBound = 1;
+    for(int digitCount = 1; ; digitCount++, guessBound*=10){
+        if(funcMap[9]*digitCount < guessBound) break;
+    }
 
+    vector<ll> list;
+    for(ll num = 0; num < guessBound; num++){
+        if(sumFuncDigits(num, funcMap) == num)
+            list.push_back(num);
+    }
+    return list;
+}
+
+ll sumOfNumberEqualPowerDigitSum(int exponent){
     vector<ll> powerMap(10);
     for(int digit = 0; digit<10; digit++){
         powerMap[digit] = 1;
         for(int i = 0; i<exponent; i++) powerMap[digit] *= digit;
     }
 
+    vector<ll> numbers = listNumEqualDigitFuncSum(powerMap);
+
     ll sum = 0;
-    for(int num = 10; num <guessBound; num++){
-        if(sumFuncDigits(num, powerMap) == num)
-            sum += num;
+    for(ll num : numbers){
+        if(num >= 10) sum += num;
     }
 
     return sum;
@@ -55,8 +66,7 @@ int main(){
 
 /*
 Notes:
- We check all numbers upto a limit, for the limit we find digit count k s.t. 10^k > k*9^exponent, that is even minimal number with that 
- many digit is greater than digit sum, a rough estimate to this is 10^k/k > 9^exponent = x -> k-log10(k) = log10(x) -> k = log10(x)+
- log10(log10(x))
- Complexity: O(10^(n+log n) * log n)
+ We first find digit by finding k digit bound such that even k 9's can't cross the lowest 10^(k-1), and then check for all number below 
+ that. Note that we precompute powers to optimize the process
+ Complexity: O(X * log n)
 */
