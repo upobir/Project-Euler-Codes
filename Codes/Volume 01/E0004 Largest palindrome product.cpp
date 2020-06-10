@@ -10,18 +10,14 @@ Statement:
  Find the largest palindrome made from the product of two 3-digit numbers.
 */
 
-ll reverseNum(ll num){
+ll reverseNum(ll num, ll base = 10){
     ll rev = 0;
     while(num){
-        rev *= 10;
-        rev += num % 10;
-        num /= 10;
+        rev *= base;
+        rev += num % base;
+        num /= base;
     }
     return rev;
-}
-
-bool isPalindrome(ll num){
-    return num == reverseNum(num);
 }
 
 ll largestProductPalindrome(int len){
@@ -33,7 +29,7 @@ ll largestProductPalindrome(int len){
     for(ll bigNum = fn; bigNum >= st && bigNum*bigNum > bestPalindrome; bigNum--){
         for(ll smallNum = bigNum; smallNum >= st && bigNum*smallNum > bestPalindrome; smallNum--){
             ll product = smallNum * bigNum;
-            if(isPalindrome(product))
+            if(product == reverseNum(product))
                 bestPalindrome = product;
         }
     }
