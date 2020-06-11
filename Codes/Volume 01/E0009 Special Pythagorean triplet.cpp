@@ -25,18 +25,19 @@ vector<ll> getDivisors(ll num){
     return ret;
 }
 
-ll pythogoreanTripleProductOfSum(ll sum){
-    sum /= 2;
-    vector<ll> divisors = getDivisors(sum);
+vector<tuple<ll, ll, ll>> pythagoreanTriplesWithSum(ll sum, vector<ll> &divisors){
+    vector<tuple<ll, ll, ll>> triples;
 
-    for(int i = 0; i<divisors.size(); i++){
+    for(int i = 0, j = 0; i<divisors.size(); i++){
         ll MplusN = divisors[i];
         if(MplusN % 2 == 0) continue;
 
-        int startIndex = lower_bound(divisors.begin(), divisors.end(), MplusN/2+1) - divisors.begin();
-        for(int j = startIndex; j<i; j++){
-            ll M = divisors[j];
-            if(sum/MplusN % M != 0) continue;
+        while(divisors[j] <= MplusN/2) j++;
+
+        for(int k = j; k<i; k++){
+            ll M = divisors[k];
+
+            if((sum/MplusN) % M != 0) continue;
             if(__gcd(M, MplusN) != 1) continue;
 
             ll G = sum/(MplusN*M);
@@ -45,9 +46,24 @@ ll pythogoreanTripleProductOfSum(ll sum){
             ll a = (M*M - N*N)*G;
             ll b = 2*M*N*G;
             ll c = (M*M + N*N)*G;
-            return a*b*c;
+            triples.emplace_back(a, b, c);
         }
     }
+    return triples;
+}
+
+ll pythogoreanTripleProductOfSum(ll sum){
+    sum /= 2;
+    vector<ll> divisors = getDivisors(sum);
+
+    vector<tuple<ll, ll, ll>> triples = pythagoreanTriplesWithSum(sum, divisors);
+
+    if(!triples.empty()){
+        ll a, b, c;
+        tie(a, b, c) = triples[0];
+        return a*b*c;
+    }
+    
     return -1;
 }
 
@@ -60,7 +76,7 @@ int main(){
 
 /*
 Notes:
- We know that primitve pythagorean triples are a = m*m-n*n, b = 2*m*n, c = m*m+n*n (one of m, n is even). and by multiplying g with then we 
+ We know that primitve pythagorean triples are a = m*m-n*n, b = 2*m*n, c = m*m+n*n (one of m, n is even). and by multiplying g with them we 
  get all triples. So sum = 2*m*(m+n)*g, we first fix m+n which must be odd, then find m >= (m+n)/2.
  Complexity: O(n^(2/3) * log n)
 */
