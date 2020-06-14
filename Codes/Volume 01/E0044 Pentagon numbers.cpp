@@ -38,7 +38,7 @@ public:
         return divisors.size()-1;
     }
 
-    vector<int>& operator[](int number){
+    const vector<int>& operator[](int number){
         while(number >= divisors.size())
             resieveUntil(2*divisors.size());
         return divisors[number];
