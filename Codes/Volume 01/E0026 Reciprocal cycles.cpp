@@ -22,7 +22,7 @@ Statement:
 */
 
 // computes x^e mod m, m should fit in integer
-ll modExpo(ll x, ll e, ll m){
+ll modularExpo(ll x, ll e, ll m){
     if(m == 1) return 0;
     ll ret = 1;
     while(e > 0){
@@ -41,7 +41,7 @@ ll multiplicativeOrder(ll a, ll m, vector<pair<ll, int>> primesOfPhiM){
     for(auto p : primesOfPhiM){
         ll prime = p.first;
         for(int i = 0; i<p.second; i++){
-            if(modExpo(a, order/prime, m) == 1) order /= prime;
+            if(modularExpo(a, order/prime, m) == 1) order /= prime;
             else break;
         }
     }
