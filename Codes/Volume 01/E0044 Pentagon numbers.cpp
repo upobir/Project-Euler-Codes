@@ -34,6 +34,10 @@ public:
         divisors.resize(1);
     }
 
+    int lastComputed(){
+        return divisors.size()-1;
+    }
+
     vector<int>& operator[](int number){
         while(number >= divisors.size())
             resieveUntil(2*divisors.size());
