@@ -22,6 +22,7 @@ Statement:
 class primesDynamicSieve{
 private:
     vector<bool> isComposite;
+    vector<int> primes;
 
     void resieveUntil(int maxNum){
         int prvMax = isComposite.size();
@@ -39,8 +40,6 @@ private:
     }
 
 public:
-    vector<int> primes;
-
     primesDynamicSieve(){
         isComposite.resize(1);
     }
@@ -53,6 +52,16 @@ public:
         while(number >= isComposite.size())
             resieveUntil(2*isComposite.size());
         return !isComposite[number];
+    }
+
+    int lastPrimeCount(){
+        return primes.size();
+    }
+
+    int nthPrime(int n){
+        while(n >= primes.size())
+            resieveUntil(2*isComposite.size());
+        return primes[n];
     }
 };
 
