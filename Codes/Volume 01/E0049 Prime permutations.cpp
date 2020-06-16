@@ -45,6 +45,12 @@ vector<tuple<int, int, int>> getArithmeticTriple(vector<int> numbers){
     return triples;
 }
 
+string digitSignature(ll number){
+    string ret = to_string(number);
+    sort(ret.begin(), ret.end());
+    return ret;
+}
+
 string concatenatedPermutedArithmaticNumbers(int digits, vector<string> except){
     int start = 1;
     for(int i = 1; i<digits; i++) start *= 10;
@@ -57,9 +63,8 @@ string concatenatedPermutedArithmaticNumbers(int digits, vector<string> except){
     while(index < primes.size()){
         int prime = primes[index];
 
-        string sPrime = to_string(prime);
-        sort(sPrime.begin(), sPrime.end());
-        digitBin[sPrime].push_back(prime);
+        string signature = digitSignature(prime);
+        digitBin[signature].push_back(prime);
 
         index++;
     }
