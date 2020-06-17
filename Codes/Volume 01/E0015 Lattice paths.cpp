@@ -12,7 +12,7 @@ Statement:
  How many such routes are there through a 20×20 grid?
 */
 
-ll nCr(ll n, ll r){
+ll binomial(ll n, ll r){
     if(2*r > n) 
         r = n - r;
     ll ret = 1;
@@ -24,7 +24,7 @@ ll nCr(ll n, ll r){
 }
 
 ll countRouteLatticeGrid(int n, int m){
-    ll ans = nCr(n+m, n);
+    ll ans = binomial(n+m, n);
     return ans;
 }
 
