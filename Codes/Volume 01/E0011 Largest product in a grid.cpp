@@ -90,7 +90,7 @@ vector<string> tokenizeWithChar(string &text, char delim){
     return ret;
 }
 
-vector<vector<int>> parseGrid(char *grid){
+vector<vector<int>> parseIntGrid(char *grid){
     string str(grid);
     vector<vector<int>> retGrid;
     vector<string> rows = tokenizeWithChar(str, '\n');
@@ -105,7 +105,7 @@ vector<vector<int>> parseGrid(char *grid){
 }
 
 ll largestAdjacentProductInGrid(char *grid, int adjlen){
-    vector<vector<int>> numGrid = parseGrid(grid);
+    vector<vector<int>> numGrid = parseIntGrid(grid);
 
     //utility stuff
     function<bool(int, int)> isValid = [&](int i, int j){

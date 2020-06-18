@@ -63,7 +63,7 @@ vector<string> tokenizeWithChar(string &text, char delim){
     return ret;
 }
 
-vector<vector<int>> parseGrid(char *grid){
+vector<vector<int>> parseIntGrid(char *grid){
     string str(grid);
     vector<vector<int>> retGrid;
     vector<string> rows = tokenizeWithChar(str, '\n');
@@ -78,7 +78,7 @@ vector<vector<int>> parseGrid(char *grid){
 }
 
 ll maxPathSumTriangle(char *triangle){
-    vector<vector<int>> grid = parseGrid(triangle);
+    vector<vector<int>> grid = parseIntGrid(triangle);
     vector<vector<ll>> sumMemo(grid.size());
     
     for(int row = int(grid.size())-1; row >=0; row--){
