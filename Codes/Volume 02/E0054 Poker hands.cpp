@@ -50,7 +50,7 @@ typedef long long int ll;
  How many hands does Player 1 win?
 */
 
-class pokerHand{
+class PokerHand{
 private:
     static int value(char v){
         if(isdigit(v)) return v-'0';
@@ -183,7 +183,7 @@ public:
               FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_FLUSH};
     
     vector<string> cards;
-    pokerHand(vector<string> shuffledCards){
+    PokerHand(vector<string> shuffledCards){
         assert(shuffledCards.size() == 5);
         cards = shuffledCards;
         sort(cards.begin(), cards.end(), cardComparator);
@@ -205,7 +205,7 @@ public:
         return rank;
     }
 
-    const bool operator<(const pokerHand &other){
+    const bool operator<(const PokerHand &other){
         if(rank != other.rank) return rank < other.rank;
         else return tieBraker < other.tieBraker;
     }
@@ -247,8 +247,8 @@ int countWinningHands(string filePath, int player){
     
     int winCount = 0;
     for(auto &game : games){
-        pokerHand hand1(vector<string>(game.begin(), game.begin()+5));
-        pokerHand hand2(vector<string>(game.begin()+5, game.begin()+10));
+        PokerHand hand1(vector<string>(game.begin(), game.begin()+5));
+        PokerHand hand2(vector<string>(game.begin()+5, game.begin()+10));
         if(player == 1) winCount += (hand2 < hand1);
         else            winCount += (hand1 < hand2);
     }
@@ -262,3 +262,9 @@ int main(){
     )
     return 0;
 }
+
+/*
+Notes: 
+ parse the hands and use LOJIK
+ Complexity: O(|S|)
+*/

@@ -32,9 +32,11 @@ public:
     BigInteger(string number){
         for(int done = int(number.size()); done > 0; done -= 9){
             int startPos = (done >= BASELENGTH)? done - BASELENGTH : 0;
-            int part = stoi(number.substr(startPos, BASELENGTH));
+            int length = ((startPos != 0)? BASELENGTH : done);
+            int part = stoi(number.substr(startPos, length));
             parts.push_back(part);
         }
+        while(number.back() == 0) number.pop_back();
     }
 
     string toString(){
