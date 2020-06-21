@@ -38,7 +38,7 @@ public:
         while(number.back() == 0) number.pop_back();
     }
 
-    string toString(){
+    string toString() const {
         stringstream number;
         number << (parts.empty()? 0 : parts.back());
         for(int i = int(parts.size()) - 2; i>=0; i--){

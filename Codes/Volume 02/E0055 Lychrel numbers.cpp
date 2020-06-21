@@ -58,7 +58,7 @@ public:
         while(number.back() == 0) number.pop_back();
     }
 
-    string toString(){
+    string toString() const {
         stringstream number;
         number << (parts.empty()? 0 : parts.back());
         for(int i = int(parts.size()) - 2; i>=0; i--){
@@ -67,7 +67,7 @@ public:
         return number.str();
     }
 
-    BigInteger reverseBase10(){
+    BigInteger reverseBase10() const {
         string sBig = toString();
         reverse(sBig.begin(), sBig.end());
         return BigInteger(sBig);

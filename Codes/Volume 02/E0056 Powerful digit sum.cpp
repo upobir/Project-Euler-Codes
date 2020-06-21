@@ -40,7 +40,7 @@ public:
         while(number.back() == 0) number.pop_back();
     }
 
-    string toString(){
+    string toString() const {
         stringstream number;
         number << (parts.empty()? 0 : parts.back());
         for(int i = int(parts.size()) - 2; i>=0; i--){
@@ -49,7 +49,7 @@ public:
         return number.str();
     }
 
-    int digitSumBase10(){
+    int digitSumBase10() const {
         int sum = 0;
         for(int part : parts){
             while(part){

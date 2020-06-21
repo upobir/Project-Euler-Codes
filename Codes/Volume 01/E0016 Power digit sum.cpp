@@ -29,7 +29,7 @@ public:
         }
     }
 
-    BigInteger(string number){
+    BigInteger(string number) {
         for(int done = int(number.size()); done > 0; done -= 9){
             int startPos = (done >= BASELENGTH)? done - BASELENGTH : 0;
             int length = ((startPos != 0)? BASELENGTH : done);
@@ -39,7 +39,7 @@ public:
         while(number.back() == 0) number.pop_back();
     }
 
-    string toString(){
+    string toString() const {
         stringstream number;
         number << (parts.empty()? 0 : parts.back());
         for(int i = int(parts.size()) - 2; i>=0; i--){
