@@ -237,7 +237,7 @@ vector<vector<string>> parseStringGrid(string grid){
 }
 
 int countWinningHands(string filePath, int player){
-    fstream file(filePath);
+    fstream file(filePath, fstream::in);
     string contents;
     if(file.is_open()){
         getline(file, contents, '\0');
