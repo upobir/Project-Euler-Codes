@@ -45,6 +45,7 @@ ll modularExpo(ll x, ll e, ll m){
 bool rabinMillerPrimalityCheck(ll number, int tests = 50){
     if(number < 4) return number > 1;
     if(number % 2 == 0) return false;
+    if(number % 3 == 0) return false;
 
     ll x = number-1;
     int e = __builtin_ctzll(x);
