@@ -118,6 +118,7 @@ private:
     vector<ll> initial, periodic;
 public:
     // it only works with positive a, d, b for now
+    // (p + sqrt(d))/q
     PeriodicContinuedFraction(ll p = 0, ll d = 0, ll q = 1){
         assert(q > 0 && p >= 0 && d >= 0);
         if((d-p*p) % q != 0){
