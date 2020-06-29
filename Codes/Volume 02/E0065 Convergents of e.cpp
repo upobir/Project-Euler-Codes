@@ -5,20 +5,33 @@ typedef long long int ll;
 
 /*
 Statement:
- It is possible to show that the square root of two can be expressed as an infinite continued fraction.
- 
- 2–√=1+1/(2+1/(2+1/2+…)))
- By expanding this for the first four iterations, we get:
- 
- 1+1/2=3/2=1.5
- 1+1/(2+1/2)=7/5=1.4
- 1+1/(2+1/(2+1/2))=17/12=1.41666…
- 1+1/(2+1/(2+1/(2+1/2)))=41/29=1.41379…
- 
- The next three expansions are 99/70, 239/169, and 577/408, but the eighth expansion, 1393/985, is the first example where the number of 
- digits in the numerator exceeds the number of digits in the denominator.
- 
- In the first one-thousand expansions, how many fractions contain a numerator with more digits than the denominator?
+The square root of 2 can be written as an infinite continued fraction.
+
+√2=1+1/(2+1/(2+1/(2+1/(2+...))))
+
+The infinite continued fraction can be written, √2=[1;(2)], (2) indicates that 2 repeats ad infinitum. In a similar way, √23=[4;(1,3,1,8)].
+
+It turns out that the sequence of partial values of continued fractions for square roots provide the best rational approximations. Let us 
+consider the convergents for √2.
+
+1+1/2=3/2
+1+1/(2+1/2)=7/5
+1+1/(2+1/(2+1/2))=17/12
+1+1/(2+1/(2+1/(2+1/2)))=41/29
+
+Hence the sequence of the first ten convergents for √2 are:
+
+1,3/2,7/5,17/12,41/29,99/70,239/169,577/408,1393/985,3363/2378,...
+
+What is most surprising is that the important mathematical constant,
+e=[2;1,2,1,1,4,1,1,6,1,...,1,2k,1,...].
+
+The first ten terms in the sequence of convergents for e are:
+
+2,3,8/3,11/4,19/7,87/32,106/39,193/71,1264/465,1457/536,...
+The sum of digits in the numerator of the 10th convergent is 1+4+5+7=17.
+
+Find the sum of digits in the numerator of the 100th convergent of the continued fraction for e.
 */
 
 class BigInteger{
@@ -59,15 +72,15 @@ public:
         return number.str();
     }
 
-    int lengthInBase10() const{
-        if(parts.empty()) return 0;
-        int ans = (parts.size()-1)*BASELENGTH;
-        int prefix = parts.back();
-        while(prefix){
-            prefix /= 10;
-            ans++;
+    int digitSumBase10() const {
+        int sum = 0;
+        for(int part : parts){
+            while(part){
+                sum += part%10;
+                part /= 10;
+            }
         }
-        return ans;
+        return sum;
     }
 
     BigInteger operator+(BigInteger other){
@@ -102,65 +115,33 @@ public:
     }
 };
 
-bool squareRoot(ll x, ll &y){
-    y = sqrtl(x);
-    for(y = max(0ll, y-1); ;y++){
-        if(y*y>x){
-            y = y-1;
-            return false;
-        }
-        if(y*y == x) return true;
-    }
-}
-
 class ContinuedFraction{
 public:
     virtual ll get(ll pos) = 0;
     virtual string toString() = 0;
 };
 
-class PeriodicContinuedFraction : public ContinuedFraction{
+class PatternedContinuedFraction : public ContinuedFraction {
 private:
-    vector<ll> initial, periodic;
+    function<ll(ll)> pattern;
+    int toStringBound;
 public:
-    // it only works with positive a, d, b for now
-    // (p + sqrt(d))/q
-    PeriodicContinuedFraction(ll p = 0, ll d = 0, ll q = 1){
-        assert(q > 0 && p >= 0 && d >= 0);
-        if((d-p*p) % q != 0){
-            p *= q, d *= q*q, q *= q;
-        }
-        map<pair<ll, ll>, int> mp;
-        while(q != 0 && mp.count({p, q}) == 0){
-            mp[{p, q}] = initial.size();
-            ll floorDesc;
-            squareRoot(d, floorDesc);
-            ll a = (p+floorDesc)/q;
-            initial.push_back(a);
-            p = a*q-p;
-            q = (d - p*p)/q;
-        }
-        if(q != 0){
-            periodic.assign(initial.begin()+mp[{p, q}], initial.end());
-            initial.resize(mp[{p, q}]);
-        }
+    PatternedContinuedFraction(function<ll(ll)> pattern, int toStringBound = 20){
+        this->pattern = pattern;
+        this->toStringBound = toStringBound;
+    }
+
+    ll get(ll pos) override {
+        return pattern(pos);
     }
 
     string toString() override {
         string ret;
-        for(int i = 0; i<initial.size(); i++) ret += ((i==0)? "" : ",") + to_string(initial[i]);
-        ret += ":";
-        for(int i = 0; i<periodic.size(); i++) ret += ((i==0)? "" : ",") + to_string(periodic[i]);
+        for(int pos = 0; pos<toStringBound; pos++){
+            ret += to_string(get(pos)) + ",";
+        }
+        ret += "...";
         return ret;
-    }
-
-    int period(){ return periodic.size(); }
-    int prefix(){ return initial.size(); }
-
-    ll get(ll pos) override {
-        if(pos < initial.size()) return initial[pos];
-        if(periodic.empty()) return 0;
-        else return periodic[(pos-initial.size())%periodic.size()];
     }
 };
 
@@ -195,30 +176,41 @@ public:
     }
 };
 
-int countSqrtConvergantWithLongerNumeratorUntil(ll num, int convergentCount){
-    shared_ptr<ContinuedFraction> continuedFraction = make_shared<PeriodicContinuedFraction>(0, num, 1);
-    Convergent convergent(continuedFraction);
-    int ans = 0;
-    convergent.nextConvergent();
-    for(int i = 1; i<=convergentCount; i++){
-        convergent.nextConvergent();
-        if(convergent.getNumerator().lengthInBase10() > convergent.getDenominator().lengthInBase10())
-            ans++;
+bool squareRoot(ll x, ll &y){
+    y = sqrtl(x);
+    for(y = max(0ll, y-1); ;y++){
+        if(y*y>x){
+            y = y-1;
+            return false;
+        }
+        if(y*y == x) return true;
     }
-    return ans;
 }
+
+ll sumNumeratorDigitsOfConvergentsOfE(int nth){
+    shared_ptr<ContinuedFraction> continuedFraction = make_shared<PatternedContinuedFraction>([](ll pos){
+        if(pos == 0) return 2ll;
+        return (pos % 3 == 2)? (pos/3+1)*2ll : 1ll;
+    });
+    Convergent convergent(continuedFraction);
+
+    for(int order = 1; order <= nth; order++){
+        convergent.nextConvergent();
+    }
+    ll sum = convergent.getNumerator().digitSumBase10();
+    return sum;
+}
+
 
 int main(){
     Time(
-        cout<<countSqrtConvergantWithLongerNumeratorUntil(2, 1000)<<endl;
+        cout<<sumNumeratorDigitsOfConvergentsOfE(100)<<endl;
     )
     return 0;
 }
 
 /*
 Notes:
- First I made a class to handle continued fractions which will create the reperesentation given (a+sqrt(d))/b, after doing that I made a 
- class to handle the convergants which uses bigints to find the next convergant, finally I just simulated finding the first m convergant
- and checking which ones have longer numerator. This is obviously more complex than necessary, but I wanted to make it general.
- Complexity: O(sqrt(n) * log^2 n + m^2)
+ We have code for convergent, just needed to define a new kind of continued fraction, patterned which works with patterned fucntion.
+ Complexity: O(n^2)
 */

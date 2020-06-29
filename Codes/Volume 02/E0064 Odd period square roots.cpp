@@ -54,7 +54,13 @@ bool squareRoot(ll x, ll &y){
     }
 }
 
-class PeriodicContinuedFraction{
+class continuedFraction{
+public:
+    virtual ll get(ll pos) = 0;
+    virtual string toString() = 0;
+};
+
+class PeriodicContinuedFraction : continuedFraction{
 private:
     vector<ll> initial, periodic;
 public:
@@ -81,7 +87,7 @@ public:
         }
     }
 
-    string toString(){
+    string toString() override{
         string ret;
         for(int i = 0; i<initial.size(); i++) ret += ((i==0)? "" : ",") + to_string(initial[i]);
         ret += ":";
@@ -92,7 +98,7 @@ public:
     int period(){ return periodic.size(); }
     int prefix(){ return initial.size(); }
 
-    ll get(ll pos){
+    ll get(ll pos) override {
         if(pos < initial.size()) return initial[pos];
         if(periodic.empty()) return 0;
         else return periodic[(pos-initial.size())%periodic.size()];
