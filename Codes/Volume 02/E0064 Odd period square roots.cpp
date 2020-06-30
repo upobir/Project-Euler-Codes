@@ -54,13 +54,13 @@ bool squareRoot(ll x, ll &y){
     }
 }
 
-class continuedFraction{
+class ContinuedFraction{
 public:
     virtual ll get(ll pos) = 0;
     virtual string toString() = 0;
 };
 
-class PeriodicContinuedFraction : continuedFraction{
+class PeriodicContinuedFraction : public ContinuedFraction{
 private:
     vector<ll> initial, periodic;
 public:
