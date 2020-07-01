@@ -77,8 +77,7 @@ vector<vector<int>> parseIntGrid(char *grid){
     return retGrid;
 }
 
-ll maxPathSumTriangle(char *triangle){
-    vector<vector<int>> grid = parseIntGrid(triangle);
+ll maxPathSumTriangleDP(vector<vector<int>> grid){
     vector<vector<ll>> sumMemo(grid.size());
     
     for(int row = int(grid.size())-1; row >=0; row--){
@@ -91,6 +90,12 @@ ll maxPathSumTriangle(char *triangle){
         }
     }
     return sumMemo[0][0];
+}
+
+ll maxPathSumTriangle(char *triangle){
+    vector<vector<int>> grid = parseIntGrid(triangle);
+    ll ans = maxPathSumTriangleDP(grid);
+    return ans;
 }
 
 int main(){
