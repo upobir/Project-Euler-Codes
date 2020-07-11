@@ -14,7 +14,7 @@ Statement:
  How many different ways can £2 be made using any number of coins?
 */
 
-vector<ll> countKnapsackUnconstrained(vector<int> weights, int maxSum){
+vector<ll> countKnapsackUnconstrained(vector<int> &weights, int maxSum){
     vector<ll> count(maxSum+1);
     count[0] = 1;
     for(int w : weights){
